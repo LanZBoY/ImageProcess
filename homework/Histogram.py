@@ -1,8 +1,11 @@
+from re import L
 import cv2
 import matplotlib.pyplot as plt
 
 img = cv2.imread('./homework/namin.jpg', 0)
 imgBGR = cv2.imread('./homework/namin.jpg', -1)
+cv2.imshow("SRC", imgBGR)
+cv2.waitKey()
 list = [0] * 256
 
 (w, h, c) = imgBGR.shape
@@ -38,7 +41,8 @@ plt.plot(range(len(afterList)), afterList)
 
 for x in range(w):
     for y in range(h):
-        imgBGR[x][y] = addList[img[x][y]] / cdf * 255
+        for z in range(c):
+            imgBGR[x][y][z] = imgBGR[x][y][z] * addList[img[x][y]] / cdf
 
 plt.show()
 cv2.imshow("naminGray", img)
