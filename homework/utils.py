@@ -1,3 +1,5 @@
+from trace import Trace
+from typing import Tuple
 import cv2
 import numpy as np
 
@@ -56,5 +58,40 @@ def boundary_extraction(img):
     resutl_img = copy_img - erosion_img
     return resutl_img
 
+def match_line(img, bx = 0,by = 0):
+    border_img = cv2.copyMakeBorder(img, 1, 1, 1, 1, cv2.BORDER_CONSTANT, value=0.)
+    (border_h, border_w) = border_img.shape
+    for y in range(1, border_h - 1):
+        for x in range(1, border_w - 1):
+            if((border_img[y - 1: y + 2, x] == [1.,1.,1.]).all()):
+                border_img[y + by , x + bx] = 1.
+            if((border_img[y, x - 1: x + 2] == [1.,1.,1.]).all()):
+                border_img[y + by , x + bx] = 1.
+    return border_img[1:border_h-1, 1:border_w-1]
+
 def convex_hull(img):
-    pass
+    prev_img = img.copy()
+    while(True):
+        current = match_line(prev_img, bx = 1)
+        if((current == prev_img).all()):
+            break
+        prev_img = current
+    print('convex_hull - 1/4')
+    while(True):
+        current = match_line(prev_img, bx = -1)
+        if((current == prev_img).all()):
+            break
+        prev_img = current
+    print('convex_hull - 2/4')
+    while(True):
+        current = match_line(prev_img, by = 1)
+        if((current == prev_img).all()):
+            break
+        prev_img = current
+    print('convex_hull - 3/4')
+    while(True):
+        current = match_line(prev_img, by = -1)
+        if((current == prev_img).all()):
+            break
+        prev_img = current
+    print('convex_hull - 4/4')
