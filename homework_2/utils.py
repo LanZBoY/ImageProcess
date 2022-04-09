@@ -95,3 +95,4 @@ def convex_hull(img):
             break
         prev_img = current
     print('convex_hull - 4/4')
+    return current
