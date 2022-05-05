@@ -71,6 +71,7 @@ def match_line(img, bx = 0,by = 0):
 
 def convex_hull(img):
     prev_img = img.copy()
+    print('convex_hull - 0/4')
     while(True):
         current = match_line(prev_img, bx = 1)
         if((current == prev_img).all()):
