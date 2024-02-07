@@ -2,9 +2,7 @@ import numpy as np
 import cv2
 from math import sin, cos, pi
 
-
-
-def houghCircle(img, method = None, dp = 1.0, minDist = None, high_threshold = 360, low_threshold = 100, minRadius = 5, maxRadius = 20):
+def houghCircle(img, method = None, dp = 1.0, minDist = None, high_threshold = 360, low_threshold = 20, minRadius = 5, maxRadius = 5):
     (h, w, c) = img.shape
     if(dp!= 1.0):
         h = int(h * dp)
